@@ -1,0 +1,50 @@
+CREATE SCHEMA loja;
+
+CREATE TABLE  loja.cliente(
+
+    idCliente serial primary key,
+	nome varchar(150),
+	endereco varchar(150),
+	numeroEndereco varchar(5),
+	complemento varchar(150),
+	bairro varchar(150),
+	cidade varchar(150),
+    telefoneCliente varchar(11),
+    cep varchar(150),
+    cpf varchar(11)
+);
+
+
+CREATE TABLE loja.produto (
+
+    idProduto serial primary key,
+	dataFabricacao timestamp,
+    nomeProduto varchar(150),
+	custo numeric(100),
+    valorUnitario decimal
+);
+
+CREATE TABLE loja.pedido (
+
+    idPedido serial primary key,
+    valortotal decimal(5),
+    dataemissao timestamp,
+    idCliente int references loja.cliente(idCliente)
+);
+
+CREATE TABLE loja.pedidoitem (
+   
+	idpedidoItem serial primary key,
+	idproduto int REFERENCES loja.produto(idproduto),
+	idpedido int REFERENCES loja.pedido(idpedido),
+	valorVendaUnidade decimal(5),
+	qtProduto numeric(100),
+	vldesconto numeric,
+	percDesconto decimal
+);
+
+INSERT INTO loja.produto (datafabricacao,nomeproduto,custo,valorunitario)
+values
+( '2020-04-15: 10:20:10' , 	'Camisa Polo'  ,20,45.00 ),
+( '2021-10-12: 18:32:10' , 	'Camisa Lisa ' ,10, 28.00),
+( '2021-05-15: 00:30:10' , 	'Calca Jeans'  ,20,	80.00);
